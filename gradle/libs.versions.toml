@@ -31,6 +31,7 @@ mockkVersion = "1.14.9"
 turbineVersion = "1.2.1"
 androidArchTestingVersion = "2.2.0"
 coreKtxVersion = "1.7.0"
+runtime = "1.10.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -79,6 +80,7 @@ turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine
 
 androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "androidArchTestingVersion" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 
 
 [plugins]

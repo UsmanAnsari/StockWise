@@ -18,11 +18,17 @@ class SupplierRepositoryImpl @Inject constructor(
     override fun getSupplierById(supplierId: Long): Flow<Supplier?> =
         supplierDao.getSupplierById(supplierId)
 
+    override suspend fun getSupplierByIdOneShot(supplierId: Long): Supplier? {
+        return supplierDao.getSupplierByIdOneShot(supplierId)
+    }
+
     override fun getSuppliersWithProductCount(): Flow<List<SupplierWithProductCount>> =
         supplierDao.getSuppliersWithProductCount()
 
     override fun searchSuppliers(query: String): Flow<List<Supplier>> =
         supplierDao.searchSuppliers(query)
+
+    override suspend fun getSupplierByName(name: String) = supplierDao.getSupplierByName(name)
 
     override suspend fun insertSupplier(supplier: Supplier): Result<Long> {
         return try {
@@ -48,11 +54,11 @@ class SupplierRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteSupplier(supplier: Supplier): Result<Unit> {
+    override suspend fun deleteSupplier(supplierId: Long): Result<Unit> {
         return try {
             // Products with this supplier will have supplier_id set to NULL (SET_NULL)
             // We might want to warn the user about this
-            supplierDao.delete(supplier)
+            supplierDao.delete(supplierId)
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

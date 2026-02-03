@@ -112,6 +112,18 @@ class ProductRepositoryImpl @Inject constructor(
         return existing != null && existing.id != excludeId
     }
 
+    override suspend fun getProductBySku(sku: String): Product? {
+        return productDao.getProductBySku(sku)
+    }
+
+    override suspend fun getProductCountByCategory(categoryId: Long): Int {
+        return productDao.getProductCountByCategory(categoryId)
+    }
+
+    override suspend fun getProductCountBySupplier(supplierId: Long): Int {
+        return productDao.getProductCountBySupplier(supplierId)
+    }
+
     override suspend fun getProductByIdOneShot(productId: Long): Product? {
         return productDao.getProductByIdOneShot(productId)
     }

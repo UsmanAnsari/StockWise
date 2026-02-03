@@ -16,6 +16,8 @@ interface ProductRepository {
     fun searchProducts(query: String): Flow<List<ProductWithDetails>>
     fun getLowStockProducts(): Flow<List<ProductWithDetails>>
     fun getOutOfStockProducts(): Flow<List<ProductWithDetails>>
+    suspend fun getProductCountByCategory(categoryId: Long): Int
+    suspend fun getProductCountBySupplier(supplierId: Long): Int
 
     // Stats
     fun getInventoryStats(): Flow<InventoryStats>
@@ -29,5 +31,6 @@ interface ProductRepository {
 
     // Validation
     suspend fun isSkuExists(sku: String, excludeId: Long? = null): Boolean
+    suspend fun getProductBySku(sku: String): Product?
     suspend fun getProductByIdOneShot(productId: Long): Product?
 }

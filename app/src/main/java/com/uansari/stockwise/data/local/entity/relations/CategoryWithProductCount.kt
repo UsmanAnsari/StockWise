@@ -9,7 +9,11 @@ data class CategoryWithProductCount(
     val id: Long,
     val name: String,
     val description: String?,
-    val color: Long,
-    @ColumnInfo("created_at")val createdAt: Long,
+    val color: String,
+    @ColumnInfo("updated_at") val updatedAt: Long?,
+    @ColumnInfo("created_at") val createdAt: Long,
     @ColumnInfo("product_count") val productCount: Int
-)
+) {
+    val canDelete: Boolean
+        get() = productCount == 0
+}

@@ -51,7 +51,7 @@ interface ProductDao {
     /**
      * Get product by SKU.
      */
-    @Query("SELECT * FROM products WHERE sku = :productSku LIMIT 1")
+    @Query("SELECT * FROM products WHERE sku = :productSku AND is_active = 1 LIMIT 1")
     suspend fun getProductBySku(productSku: String): Product?
 
     // ==================== READ - With Relations ====================
@@ -162,6 +162,11 @@ interface ProductDao {
     @Query("SELECT COUNT(*) FROM products WHERE is_active = 1 AND current_stock <= low_stock_threshold")
     suspend fun getLowStockCount(): Int
 
+    @Query("SELECT COUNT(*) FROM products WHERE category_id = :categoryId AND is_active = 1")
+    suspend fun getProductCountByCategory(categoryId: Long): Int
+
+    @Query("SELECT COUNT(*) FROM products WHERE supplier_id = :supplierId AND is_active = 1")
+    suspend fun getProductCountBySupplier(supplierId: Long): Int
     // ==================== UPDATE ====================
 
     @Update

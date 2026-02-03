@@ -7,11 +7,15 @@ import kotlinx.coroutines.flow.Flow
 interface CategoryRepository {
     fun getAllCategories(): Flow<List<Category>>
     fun getCategoryById(categoryId: Long): Flow<Category?>
+
+    suspend fun getCategoryByIdOneShot(categoryId: Long): Category?
+
+    suspend fun getCategoryByName(name: String): Category?
     fun getCategoriesWithProductCount(): Flow<List<CategoryWithProductCount>>
 
     suspend fun insertCategory(category: Category): Result<Long>
     suspend fun updateCategory(category: Category): Result<Unit>
-    suspend fun deleteCategory(category: Category): Result<Unit>
+    suspend fun deleteCategory(categoryId: Long): Result<Unit>
 
     suspend fun isCategoryNameExists(name: String, excludeId: Long? = null): Boolean
     suspend fun canDeleteCategory(categoryId: Long): Boolean

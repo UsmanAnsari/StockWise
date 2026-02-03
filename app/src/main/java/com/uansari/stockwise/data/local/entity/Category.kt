@@ -1,5 +1,6 @@
 package com.uansari.stockwise.data.local.entity
 
+import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
@@ -13,5 +14,15 @@ data class Category(
     val name: String,
     val description: String? = null,
     val color: String = "#2196F3",
+    @ColumnInfo("updated_at") val updatedAt: Long? = System.currentTimeMillis(),
     @ColumnInfo("created_at") val createdAt: Long = System.currentTimeMillis(),
-)
+) {
+    val displayColor: Color
+        get() = color.let {
+            try {
+                Color(android.graphics.Color.parseColor(it))
+            } catch (e: Exception) {
+                Color.Gray
+            }
+        }
+}

@@ -87,6 +87,8 @@ interface CategoryDao {
     @Delete
     suspend fun delete(category: Category)
 
+    @Query("DELETE FROM categories WHERE id = :categoryId")
+    suspend fun deleteById(categoryId: Long)
     /**
      * Check if category can be deleted (no products using it).
      */

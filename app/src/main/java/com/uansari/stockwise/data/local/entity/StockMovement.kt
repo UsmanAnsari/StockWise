@@ -33,4 +33,8 @@ data class StockMovement(
     val reference: String? = null,
     val notes: String? = null,
     @ColumnInfo("created_at") val createdAt: Long = System.currentTimeMillis(),
-)
+) {
+    val formattedQuantity: String
+        get() = if (quantity > 0) "+$quantity" else quantity.toString()
+
+}

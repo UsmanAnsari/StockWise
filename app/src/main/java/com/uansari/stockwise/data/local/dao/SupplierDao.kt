@@ -1,7 +1,6 @@
 package com.uansari.stockwise.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -57,6 +56,7 @@ interface SupplierDao {
     )
     fun getSuppliersWithProductCount(): Flow<List<SupplierWithProductCount>>
 
+
     /**
      * Search suppliers by name or contact person.
      */
@@ -83,8 +83,8 @@ interface SupplierDao {
      * Delete a supplier.
      * Products referencing this supplier will have supplier_id set to NULL (FK SET_NULL).
      */
-    @Delete
-    suspend fun delete(supplier: Supplier)
+    @Query("DELETE FROM suppliers WHERE id = :supplierId")
+    suspend fun delete(supplierId: Long)
 
     /**
      * Get count of products for the respective supplier (for UI warning before delete).

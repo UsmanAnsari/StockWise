@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.Assessment
-import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.Category
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocalShipping
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -31,52 +31,57 @@ import androidx.compose.ui.unit.dp
 fun MoreScreen(
     onNavigateToCategories: () -> Unit,
     onNavigateToSuppliers: () -> Unit,
-    onNavigateToReports: () -> Unit,
-    onNavigateToSettings: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("More") })
-        }) { paddingValues ->
+                title = { Text("More") }
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            // Data Management Section
+            Text(
+                text = "Data Management",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+            )
+
             MoreMenuItem(
-                icon = Icons.AutoMirrored.Filled.List,
+                icon = Icons.Default.Category,
                 title = "Categories",
                 subtitle = "Manage product categories",
                 onClick = onNavigateToCategories
             )
 
-            HorizontalDivider()
-
             MoreMenuItem(
                 icon = Icons.Default.LocalShipping,
                 title = "Suppliers",
-                subtitle = "Manage suppliers",
+                subtitle = "Manage product suppliers",
                 onClick = onNavigateToSuppliers
             )
 
-            HorizontalDivider()
+            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
-            MoreMenuItem(
-                icon = Icons.Default.Assessment,
-                title = "Reports",
-                subtitle = "View sales and inventory reports",
-                onClick = onNavigateToReports
+            // App Info Section
+            Text(
+                text = "About",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
             )
 
-            HorizontalDivider()
-
             MoreMenuItem(
-                icon = Icons.Default.Settings,
-                title = "Settings",
-                subtitle = "App settings and preferences",
-                onClick = onNavigateToSettings
+                icon = Icons.Default.Info,
+                title = "About StockWise",
+                subtitle = "Version 1.0.0",
+                onClick = { /* TODO: Show about dialog */ }
             )
         }
     }
@@ -94,29 +99,34 @@ private fun MoreMenuItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            imageVector = icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(24.dp)
         )
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = title, style = MaterialTheme.typography.bodyLarge
+                text = title,
+                style = MaterialTheme.typography.bodyLarge
             )
             Text(
                 text = subtitle,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
 
         Icon(
-            imageVector = Icons.Default.ChevronRight,
+            imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(16.dp)
         )
     }
 }

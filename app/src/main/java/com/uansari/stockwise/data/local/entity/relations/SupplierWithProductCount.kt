@@ -10,6 +10,13 @@ data class SupplierWithProductCount(
     val email: String?,
     val address: String?,
     val notes: String?,
+    @ColumnInfo("updated_at") val updatedAt: Long?,
     @ColumnInfo("created_at") val createdAt: Long,
     @ColumnInfo("product_count") val productCount: Int
-)
+) {
+    val canDelete: Boolean
+        get() = productCount == 0
+
+    val hasContactInfo: Boolean
+        get() = !contactPerson.isNullOrBlank() || !phone.isNullOrBlank() || !email.isNullOrBlank()
+}

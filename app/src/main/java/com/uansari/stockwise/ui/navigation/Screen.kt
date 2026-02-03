@@ -14,7 +14,7 @@ sealed class Screen(val route: String) {
         const val ARG_PRODUCT_ID = "productId"
     }
 
-    data object AddEditProduct : Screen("product/edit?productId={productId}") {
+    data object ProductAddEdit : Screen("product/edit?productId={productId}") {
         fun createRoute(productId: Long? = null): String {
             return if (productId != null) {
                 "product/edit?productId=$productId"

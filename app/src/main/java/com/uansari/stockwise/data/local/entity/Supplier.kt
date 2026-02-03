@@ -16,5 +16,6 @@ data class Supplier(
     val email: String? = null,
     val address: String? = null,
     val notes: String? = null,
+    @ColumnInfo("updated_at") val updatedAt: Long? = System.currentTimeMillis(),
     @ColumnInfo("created_at") val createdAt: Long = System.currentTimeMillis(),
 )

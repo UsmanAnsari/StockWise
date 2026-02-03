@@ -6,6 +6,7 @@ import com.uansari.stockwise.data.local.entity.Category
 import com.uansari.stockwise.data.local.entity.relations.CategoryWithProductCount
 import com.uansari.stockwise.domain.repository.CategoryRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,8 +21,16 @@ class CategoryRepositoryImpl @Inject constructor(
     override fun getCategoryById(categoryId: Long): Flow<Category?> =
         categoryDao.getCategoryById(categoryId)
 
+    override suspend fun getCategoryByIdOneShot(categoryId: Long): Category? {
+        return categoryDao.getCategoryByIdOneShot(categoryId)
+    }
+
+    override suspend fun getCategoryByName(name: String): Category? {
+        return categoryDao.getCategoryByName(name)
+    }
+
     override fun getCategoriesWithProductCount(): Flow<List<CategoryWithProductCount>> =
-        categoryDao.getCategoriesWithProductCount()
+        categoryDao.getCategoriesWithProductCount().map { entities -> entities.map { it } }
 
     override suspend fun insertCategory(category: Category): Result<Long> {
         return try {
@@ -47,19 +56,10 @@ class CategoryRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteCategory(category: Category): Result<Unit> {
+    override suspend fun deleteCategory(categoryId: Long): Result<Unit> {
         return try {
-            // Check if category has products
-            val productCount = categoryDao.getProductCountForCategory(category.id)
-            if (productCount > 0) {
-                return Result.failure(
-                    Exception("Cannot delete category with $productCount products. Reassign or delete products first.")
-                )
-            }
-            categoryDao.delete(category)
+            categoryDao.deleteById(categoryId)
             Result.success(Unit)
-        } catch (e: SQLiteConstraintException) {
-            Result.failure(Exception("Cannot delete category - products are using it"))
         } catch (e: Exception) {
             Result.failure(e)
         }
