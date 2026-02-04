@@ -110,14 +110,8 @@ fun ProductFilterSheet(
                 sortOption = sortOption, onSortOptionChange = onSortOptionChange
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-            // Apply Button
-            Button(
-                onClick = onDismiss, modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Apply Filters")
-            }
         }
     }
 }

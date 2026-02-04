@@ -26,7 +26,7 @@ fun SalesScreen(
                 text = "Sales History", style = MaterialTheme.typography.headlineMedium
             )
             Text(
-                text = "Not Implemented Yet",
+                text = "In Development Feature",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

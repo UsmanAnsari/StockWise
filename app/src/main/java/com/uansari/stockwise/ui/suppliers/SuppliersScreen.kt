@@ -85,7 +85,7 @@ fun SuppliersScreen(
         SuppliersContent(
             state = state,
             onEvent = viewModel::onEvent,
-            modifier = modifier.padding(paddingValues)
+            modifier = modifier.padding(top = paddingValues.calculateTopPadding())
         )
         
         // Add/Edit Dialog
@@ -185,7 +185,7 @@ private fun SuppliersContent(
                 
                 // Bottom spacing for FAB
                 item {
-                    Spacer(modifier = Modifier.height(72.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
         }

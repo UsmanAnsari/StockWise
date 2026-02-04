@@ -72,15 +72,18 @@ fun DashboardScreen(
     }
 
     Scaffold(topBar = {
-        TopAppBar(title = {
-            Text(
-                text = "StockWise", fontWeight = FontWeight.Bold
-            )
-        }, actions = {
-            IconButton(onClick = { viewModel.onEvent(DashboardEvent.Refresh) }) {
-                Icon(Icons.Default.Refresh, contentDescription = "Refresh")
+        TopAppBar(
+            title = {
+                Text(
+                    text = "StockWise", fontWeight = FontWeight.Bold
+                )
+            },
+            actions = {
+                IconButton(onClick = { viewModel.onEvent(DashboardEvent.Refresh) }) {
+                    Icon(Icons.Default.Refresh, contentDescription = "Refresh")
+                }
             }
-        })
+        )
     }, snackbarHost = { SnackbarHost(snackbarHostState) }) { paddingValues ->
 
         PullToRefreshBox(
@@ -88,7 +91,7 @@ fun DashboardScreen(
             onRefresh = { viewModel.onEvent(DashboardEvent.Refresh) },
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(top = paddingValues.calculateTopPadding())
         ) {
             if (state.isLoading && !state.isRefreshing) {
                 LoadingScreen()

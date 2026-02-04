@@ -77,7 +77,7 @@ fun ProductDetailScreen(
     }, snackbarHost = { SnackbarHost(snackbarHostState) }) { paddingValues ->
 
         ProductDetailContent(
-            state = state, onEvent = viewModel::onEvent, modifier = modifier.padding(paddingValues)
+            state = state, onEvent = viewModel::onEvent, modifier = modifier.padding(top = paddingValues.calculateTopPadding())
         )
 
         // Delete Confirmation Dialog
@@ -210,9 +210,8 @@ private fun ProductDetailContent(
                         )
                     }
                 }
-
                 // Bottom spacing
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }

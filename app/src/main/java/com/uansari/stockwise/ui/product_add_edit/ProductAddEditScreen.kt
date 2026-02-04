@@ -101,12 +101,12 @@ fun ProductAddEditScreen(
     }, snackbarHost = { SnackbarHost(snackbarHostState) }) { paddingValues ->
 
         if (state.isLoadingProduct) {
-            LoadingScreen(modifier = Modifier.padding(paddingValues))
+            LoadingScreen(modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
         } else {
             ProductAddEditForm(
                 state = state,
                 onEvent = viewModel::onEvent,
-                modifier = modifier.padding(paddingValues)
+                modifier = modifier.padding(top = paddingValues.calculateTopPadding())
             )
         }
     }
@@ -327,7 +327,7 @@ private fun ProductAddEditForm(
         }
 
         // Save Button (bottom)
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Button(
             onClick = { onEvent(ProductAddEditEvent.SaveProduct) },
@@ -346,6 +346,6 @@ private fun ProductAddEditForm(
         }
 
         // Bottom spacing
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }

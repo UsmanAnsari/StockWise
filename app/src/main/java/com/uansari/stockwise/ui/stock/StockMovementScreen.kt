@@ -142,7 +142,7 @@ fun StockMovementScreen(
             StockMovementContent(
                 state = state,
                 onEvent = viewModel::onEvent,
-                modifier = modifier.padding(paddingValues)
+                modifier = modifier.padding(top = paddingValues.calculateTopPadding())
             )
         }
 

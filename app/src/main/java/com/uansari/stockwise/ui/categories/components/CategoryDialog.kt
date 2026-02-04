@@ -151,7 +151,6 @@ private fun ColorPicker(
         "#FFC107", // Amber
         "#FF9800", // Orange
         "#FF5722", // Deep Orange
-        "#795548", // Brown
         "#607D8B", // Blue Grey
         null       // No color (default)
     )

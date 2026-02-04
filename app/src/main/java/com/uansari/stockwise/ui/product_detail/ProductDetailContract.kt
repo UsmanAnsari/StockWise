@@ -60,7 +60,7 @@ data class ProductDetailState(
         get() = product?.let { it.sellPrice - it.buyPrice } ?: 0.0
 
     companion object {
-        const val RECENT_MOVEMENTS_COUNT = 3
+        const val RECENT_MOVEMENTS_COUNT = 2
     }
 }
 

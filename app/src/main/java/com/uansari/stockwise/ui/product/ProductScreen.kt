@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -98,7 +97,7 @@ fun ProductsScreen(
             onRefresh = { viewModel.onEvent(ProductEvent.Refresh) },
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(top = paddingValues.calculateTopPadding())
         ) {
             Column(modifier = modifier.fillMaxSize()) {
                 // Active filters row
@@ -254,11 +253,6 @@ private fun ProductsContent(
                     }, onStockClick = {
                         onEvent(ProductEvent.OnStockAdjustClicked(productWithDetails.product.id))
                     })
-                }
-
-                // Bottom spacing for FAB
-                item {
-                    Spacer(modifier = Modifier.height(72.dp))
                 }
             }
         }
