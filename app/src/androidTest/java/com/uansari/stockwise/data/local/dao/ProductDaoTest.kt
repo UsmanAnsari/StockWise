@@ -329,7 +329,7 @@ class ProductDaoTest : BaseDaoTest() {
         productDao.insert(createProduct(name = "Phone", sku = "P1", supplierId = 1))
 
         val supplier = supplierDao.getSupplierByIdOneShot(1)!!
-        supplierDao.delete(supplier)
+        supplierDao.delete(supplier.id)
 
         val product = productDao.getProductByIdOneShot(1)
         assertThat(product?.supplierId).isNull()  // SET_NULL behavior

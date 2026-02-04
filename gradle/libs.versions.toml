@@ -29,9 +29,11 @@ coroutinesTestVersion = "1.10.2"
 googleTruthVersion = "1.4.5"
 mockkVersion = "1.14.9"
 turbineVersion = "1.2.1"
+robolectricVersion = "4.11.1"
 androidArchTestingVersion = "2.2.0"
 coreKtxVersion = "1.7.0"
 runtime = "1.10.2"
+junitKtx = "1.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -77,10 +79,12 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruthVersion" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbineVersion" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectricVersion" }
 
 androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "androidArchTestingVersion" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 
 
 [plugins]

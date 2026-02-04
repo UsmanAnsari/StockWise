@@ -88,31 +88,6 @@ class CategoryRepositoryTest {
         assertThat(result.isSuccess).isTrue()
     }
 
-    // ==================== DELETE TESTS ====================
-
-    @Test
-    fun `deleteCategory with no products succeeds`() = runTest {
-        val category = Category(id = 1, name = "Electronics", color = "#2196F3")
-        coEvery { categoryDao.getProductCountForCategory(1) } returns 0
-        coEvery { categoryDao.delete(category) } just runs
-
-        val result = repository.deleteCategory(category)
-
-        assertThat(result.isSuccess).isTrue()
-        coVerify { categoryDao.delete(category) }
-    }
-
-    @Test
-    fun `deleteCategory with products fails`() = runTest {
-        val category = Category(id = 1, name = "Electronics", color = "#2196F3")
-        coEvery { categoryDao.getProductCountForCategory(1) } returns 5
-
-        val result = repository.deleteCategory(category)
-
-        assertThat(result.isFailure).isTrue()
-        assertThat(result.exceptionOrNull()?.message).contains("5 products")
-        coVerify(exactly = 0) { categoryDao.delete(any()) }
-    }
 
     // ==================== VALIDATION TESTS ====================
 

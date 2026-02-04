@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.core.ktx)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.junit.ktx)
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
 
@@ -79,6 +80,7 @@ dependencies {
     testImplementation(libs.google.truth)
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
+    testImplementation(libs.robolectric)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
