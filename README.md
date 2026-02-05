@@ -2,6 +2,10 @@
   
 # 📦 StockWise
 
+<p align="center">
+<img src="app/src/main/ic_launcher-playstore.png" alt="StockWise Banner" width="25%" height="25%"/>
+</p>
+
 ### Modern Android Inventory Management App
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.21-purple.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
@@ -9,8 +13,6 @@
 [![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.12.3-blue.svg?style=flat&logo=jetpackcompose)](https://developer.android.com/jetpack/compose)
 
 **A feature-rich inventory management application built with Clean Architecture, MVI pattern, and modern Android development practices.**
-
-[Features](#-features) • [Architecture](#-architecture) • [Tech Stack](#-tech-stack) • [Screenshots](#-screenshots) • [Getting Started](#-getting-started)
 
 </div>
 
@@ -32,9 +34,27 @@
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+
+| Dashboard | Dashboard 2 | Product | Product Filter/Sort | Product Detail |
+|:---------:|:---------:|:---------:|:---------:|:---------:|
+| ![Dashboard](screenshots/Screenshot_Dashboard.png) | ![Dashboard 2](screenshots/Screenshot_Dashboard2.png) | ![Products](screenshots/Screenshot_Product.png) | ![Products Filer/Sort](screenshots/Screenshot_Product_FilterSort2.png) | ![Detail](screenshots/Screenshot_Product_Detail.png) |
+
+| Suppliers | Categories | Stock Movement | Stock Movement | Stock Movement |
+|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|
+| ![Suppliers](screenshots/Screenshot_Suppliers.png) | ![Categories](screenshots/Screenshot_Categories.png) | ![Stock](screenshots/Screenshot_StockHistory.png) | ![Stock](screenshots/Screenshot_StockHistory2.png) | ![Stock](screenshots/Screenshot_StockHistory3.png) |
+
+</div>
+
+---
+
 ## 🏗️ Architecture
 
-StockWise follows **Clean Architecture** principles with clear separation of concerns across three layers:
+StockWise is built with **Clean Architecture** and **MVI (Model-View-Intent)** pattern, ensuring maintainability, testability, and scalability.
+
+### Clean Architecture Layers
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    PRESENTATION LAYER                       │
@@ -49,7 +69,7 @@ StockWise follows **Clean Architecture** principles with clear separation of con
 │  │             │  │  (Domain)   │  │                     │  │
 │  └─────────────┘  └─────────────┘  └─────────────────────┘  │
 ├─────────────────────────────────────────────────────────────┤
-│                       DATA LAYER                             │
+│                       DATA LAYER                            │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
 │  │Repositories │  │    DAOs     │  │      Entities       │  │
 │  │   (Impl)    │  │   (Room)    │  │                     │  │
@@ -57,21 +77,164 @@ StockWise follows **Clean Architecture** principles with clear separation of con
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### MVI Pattern (Model-View-Intent)
+### MVI Pattern
 
-Each screen follows a unidirectional data flow:
+The app follows **unidirectional data flow** for predictable state management:
 ```
-┌──────────┐     ┌───────────┐     ┌──────────┐     ┌──────────┐
-│   User   │────▶│   Event   │────▶│ ViewModel│────▶│  State   │
-│  Action  │     │ (Intent)  │     │          │     │          │
-└──────────┘     └───────────┘     └────┬─────┘     └────┬─────┘
-                                        │                │
-                                        ▼                ▼
-                                  ┌──────────┐     ┌──────────┐
-                                  │  Effect  │     │    UI    │
-                                  │(One-time)│     │ (Screen) │
-                                  └──────────┘     └──────────┘
+┌────────────────────────────────────────────────────────────────────────────┐
+│                              MVI FLOW                                       │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│                           ┌──────────────┐                                  │
+│       ┌──────────────────▶│     VIEW     │──────────────────┐              │
+│       │                   │   (Screen)   │                  │              │
+│       │                   └──────────────┘                  │              │
+│       │                                                     │              │
+│       │                                                     │              │
+│    STATE                                                  EVENT            │
+│  (Immutable)                                            (Intent)           │
+│       │                                                     │              │
+│       │                   ┌──────────────┐                  │              │
+│       │                   │              │                  │              │
+│       └───────────────────│  VIEWMODEL   │◀─────────────────┘              │
+│                           │              │                                  │
+│                           └──────┬───────┘                                  │
+│                                  │                                          │
+│                           ┌──────▼───────┐                                  │
+│                           │   USE CASE   │                                  │
+│                           │   (Domain)   │                                  │
+│                           └──────────────┘                                  │
+│                                                                             │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
+
+### Contract Pattern
+
+Each screen defines a **Contract** containing State, Events, and Effects:
+
+<table>
+<tr>
+<td width="50%">
+
+**State** - UI Data (What to display)
+```kotlin
+data class State(
+    val isLoading: Boolean = true,
+    val products: List<Product> = emptyList(),
+    val searchQuery: String = ""
+) : UiState {
+    // Computed property
+    val isEmpty: Boolean 
+        get() = products.isEmpty() && !isLoading
+}
+```
+
+</td>
+<td width="50%">
+
+**Event** - User Intentions (What happened)
+```kotlin
+sealed interface Event : UiEvent {
+    data object LoadProducts : Event
+    data class OnSearchChanged(
+        val query: String
+    ) : Event
+    data class OnProductClicked(
+        val id: Long
+    ) : Event
+}
+```
+
+</td>
+</tr>
+<tr>
+<td colspan="2">
+
+**Effect** - One-time Actions (Side effects)
+```kotlin
+sealed interface Effect : UiEffect {
+    data class NavigateToDetail(val productId: Long) : Effect
+    data class ShowSnackbar(val message: String) : Effect
+    data object NavigateBack : Effect
+}
+```
+
+</td>
+</tr>
+</table>
+
+### Why MVI?
+
+| Benefit | Description |
+|---------|-------------|
+| 🔄 **Predictable** | Unidirectional flow makes state changes traceable |
+| 🧪 **Testable** | State transitions are easily unit tested |
+| 🐛 **Debuggable** | Single state object simplifies debugging |
+| 📱 **Lifecycle Safe** | State survives configuration changes |
+
+---
+
+## 🗄️ Database Schema
+
+StockWise uses **Room** database with **6 entities** including a **junction table** for many-to-many relationships.
+
+### Entity Relationship Diagram
+```mermaid
+erDiagram
+    CATEGORIES ||--o{ PRODUCTS : "1:N has"
+    SUPPLIERS ||--o{ PRODUCTS : "1:N supplies"
+    PRODUCTS ||--o{ STOCK_MOVEMENTS : "1:N tracks"
+    PRODUCTS }o--o{ SALES : "M:N via SaleItems"
+    SALES ||--o{ SALE_ITEMS : "1:N contains"
+    PRODUCTS ||--o{ SALE_ITEMS : "1:N sold as"
+
+    CATEGORIES
+    
+    SUPPLIERS
+    
+    PRODUCTS 
+    
+    STOCK_MOVEMENTS
+    
+    SALE_ITEMS
+    
+    SALES
+```
+
+### Relationships
+
+| Relationship | Type | Description |
+|--------------|------|-------------|
+| Category → Products | **1:N** | One category contains many products |
+| Supplier → Products | **1:N** | One supplier supplies many products |
+| Product → Stock Movements | **1:N** | One product has many stock changes |
+| **Product ↔ Sales** | **M:N** | Many-to-many via `SaleItems` junction table |
+
+### Junction Table: Sale Items
+
+The `SALE_ITEMS` table serves as a **junction table** enabling the many-to-many relationship between Products and Sales:
+```
+┌──────────┐       ┌─────────────┐       ┌──────────┐
+│ PRODUCTS │◄──────│ SALE_ITEMS  │──────►│  SALES   │
+│          │  1:N  │ (Junction)  │  N:1  │          │
+│    id    │       │ productId   │       │    id    │
+│          │       │ sale_id     │       │          │
+└──────────┘       │ quantity    │       └──────────┘
+                   │ unitPrice*  │
+                   └─────────────┘
+                   
+* Snapshot fields preserve data at time of sale
+```
+
+### Design Highlights
+
+| Feature | Implementation |
+|---------|---------------|
+| **M:N Relationship** | `SaleItems` junction table links Products ↔ Sales |
+| **Data Snapshots** | Product name, SKU, price stored in SaleItems for historical accuracy |
+| **Soft Delete** | Products use `isActive` flag to preserve referential integrity |
+| **Audit Trail** | `StockMovements` tracks every inventory change |
+| **Delete Protection** | Categories/Suppliers can't be deleted with associated products |
 
 ---
 
@@ -87,22 +250,6 @@ Each screen follows a unidirectional data flow:
 | **Async** | Kotlin Coroutines & Flow |
 | **Navigation** | Jetpack Navigation Compose |
 | **Testing** | JUnit, MockK, Turbine, Truth |
-
----
-
-## 📸 Screenshots
-
-<div align="center">
-
-| Dashboard | Products | Product Detail |
-|:---------:|:--------:|:--------------:|
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Products](docs/screenshots/products-list.png) | ![Detail](docs/screenshots/product-detail.png) |
-
-| Add Product | Categories | Stock Movement |
-|:-----------:|:----------:|:--------------:|
-| ![Add](docs/screenshots/add-product.png) | ![Categories](docs/screenshots/categories.png) | ![Stock](docs/screenshots/stock-movement.png) |
-
-</div>
 
 ---
 
@@ -134,21 +281,21 @@ app/src/main/java/com/yourpackage/stockwise/
 ├── 📂 data/                      # Data Layer
 │   ├── local/
 │   │   ├── dao/                  # Room DAOs
-│   │   ├── entity/               # Room Entities
-│   │   └── StockWiseDatabase.kt  # Room Database
+│   │   ├── entity/               # Room Entities & Relations
+│   │   └── StockWiseDatabase.kt  # Room Database & Converters
 │   └── repository/               # Repository Implementations
 │
 ├── 📂 domain/                    # Domain Layer
 │   ├── model/                    # Domain Models
 │   ├── repository/               # Repository Interfaces
-│   └── usecase/                  # Use Cases (32 total)
-│       ├── dashboard/            # 4 use cases
-│       ├── product/              # 8 use cases
-│       ├── category/             # 7 use cases
-│       ├── supplier/             # 7 use cases
-│       └── stock/                # 6 use cases
+│   └── usecase/                  # Use Cases
+│       ├── dashboard/            
+│       ├── product/              
+│       ├── category/             
+│       ├── supplier/             
+│       └── stock/                
 │
-├── 📂 presentation/              # Presentation Layer
+├── 📂 ui/                        # ui Layer
 │   ├── base/                     # Base MVI classes
 │   ├── components/               # Shared UI components
 │   ├── navigation/               # Navigation setup
@@ -163,7 +310,6 @@ app/src/main/java/com/yourpackage/stockwise/
 │   └── RepositoryModule.kt
 │
 └── 📂 util/                      # Utilities
-    └── DateTimeUtils.kt
 ```
 
 ---
@@ -209,7 +355,7 @@ fun `search query filters products correctly`() = runTest {
 
 ## 📊 Use Cases Overview
 
-StockWise implements **32 Use Cases** following the Single Responsibility Principle:
+StockWise implements **32 Use Cases** following the Single Responsibility Principle **(SOLID Principle)**:
 
 <details>
 <summary><b>Dashboard Use Cases (4)</b></summary>
