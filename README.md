@@ -6,13 +6,17 @@
 <img src="app/src/main/ic_launcher-playstore.png" alt="StockWise Banner" width="25%" height="25%"/>
 </p>
 
-### Modern Android Inventory Management App
-
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.21-purple.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
 [![Android](https://img.shields.io/badge/Android-29+-green.svg?style=flat&logo=android)](https://developer.android.com)
 [![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.12.3-blue.svg?style=flat&logo=jetpackcompose)](https://developer.android.com/jetpack/compose)
+<br>
+![Architecture](https://img.shields.io/badge/Architecture-Clean_Architecture-blue?style=for-the-badge)
+![Pattern](https://img.shields.io/badge/Pattern-MVI-purple?style=for-the-badge)
 
-**A feature-rich inventory management application built with Clean Architecture, MVI pattern, and modern Android development practices.**
+
+### Modern Android Inventory Management App
+
+**An inventory management application built with Clean Architecture, MVI pattern, and modern Android development practices.**
 
 </div>
 
@@ -38,7 +42,7 @@
 
 <div align="center">
 
-| Dashboard | Dashboard 2 | Product | Product Filter/Sort | Product Detail |
+| Dashboard | Dashboard | Product | Product Filter/Sort | Product Detail |
 |:---------:|:---------:|:---------:|:---------:|:---------:|
 | ![Dashboard](screenshots/Screenshot_Dashboard.png) | ![Dashboard 2](screenshots/Screenshot_Dashboard2.png) | ![Products](screenshots/Screenshot_Product.png) | ![Products Filer/Sort](screenshots/Screenshot_Product_FilterSort2.png) | ![Detail](screenshots/Screenshot_Product_Detail.png) |
 
@@ -47,6 +51,20 @@
 | ![Suppliers](screenshots/Screenshot_Suppliers.png) | ![Categories](screenshots/Screenshot_Categories.png) | ![Stock](screenshots/Screenshot_StockHistory.png) | ![Stock](screenshots/Screenshot_StockHistory2.png) | ![Stock](screenshots/Screenshot_StockHistory3.png) |
 
 </div>
+
+---
+## 🛠️ Tech Stack
+
+| Category | Technologies |
+|----------|-------------|
+| **Language** | Kotlin 2.2.21 |
+| **UI Framework** | Jetpack Compose with Material 3 |
+| **Architecture** | Clean Architecture + MVI |
+| **Dependency Injection** | Hilt |
+| **Database** | Room (SQLite) |
+| **Async** | Kotlin Coroutines & Flow |
+| **Navigation** | Jetpack Navigation Compose |
+| **Testing** | JUnit, MockK, Turbine, Truth |
 
 ---
 
@@ -107,61 +125,6 @@ The app follows **unidirectional data flow** for predictable state management:
 │                                                                             │
 └────────────────────────────────────────────────────────────────────────────┘
 ```
-
-### Contract Pattern
-
-Each screen defines a **Contract** containing State, Events, and Effects:
-
-<table>
-<tr>
-<td width="50%">
-
-**State** - UI Data (What to display)
-```kotlin
-data class State(
-    val isLoading: Boolean = true,
-    val products: List<Product> = emptyList(),
-    val searchQuery: String = ""
-) : UiState {
-    // Computed property
-    val isEmpty: Boolean 
-        get() = products.isEmpty() && !isLoading
-}
-```
-
-</td>
-<td width="50%">
-
-**Event** - User Intentions (What happened)
-```kotlin
-sealed interface Event : UiEvent {
-    data object LoadProducts : Event
-    data class OnSearchChanged(
-        val query: String
-    ) : Event
-    data class OnProductClicked(
-        val id: Long
-    ) : Event
-}
-```
-
-</td>
-</tr>
-<tr>
-<td colspan="2">
-
-**Effect** - One-time Actions (Side effects)
-```kotlin
-sealed interface Effect : UiEffect {
-    data class NavigateToDetail(val productId: Long) : Effect
-    data class ShowSnackbar(val message: String) : Effect
-    data object NavigateBack : Effect
-}
-```
-
-</td>
-</tr>
-</table>
 
 ### Why MVI?
 
@@ -238,20 +201,6 @@ The `SALE_ITEMS` table serves as a **junction table** enabling the many-to-many 
 
 ---
 
-## 🛠️ Tech Stack
-
-| Category | Technologies |
-|----------|-------------|
-| **Language** | Kotlin 2.2.21 |
-| **UI Framework** | Jetpack Compose with Material 3 |
-| **Architecture** | Clean Architecture + MVI |
-| **Dependency Injection** | Hilt |
-| **Database** | Room (SQLite) |
-| **Async** | Kotlin Coroutines & Flow |
-| **Navigation** | Jetpack Navigation Compose |
-| **Testing** | JUnit, MockK, Turbine, Truth |
-
----
 
 ## 🚀 Getting Started
 
@@ -510,21 +459,9 @@ class DeleteCategoryUseCase @Inject constructor(
 
 ---
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
 ## 👤 Author
 
-**Your Name**
+**Usman Ali Ansari**
 
 - GitHub: [@UsmanAnsari](https://github.com/UsmanAnsari)
 - LinkedIn: [usman1ansari](https://www.linkedin.com/in/usman1ansari)
