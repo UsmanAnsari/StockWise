@@ -60,6 +60,11 @@
 | ![Dashboard](gif/Dashboard.gif) | ![Products](gif/Product.gif) | ![Stock Movements](gif/StockMovement.gif) |
 
 ---
+
+## 📲 [Download & Install the App](https://github.com/UsmanAnsari/StockWise/releases/download/1.0.0/app-debug.apk)
+
+---
+
 ## 🛠️ Tech Stack
 
 | Category | Technologies |
