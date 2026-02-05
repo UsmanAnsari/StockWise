@@ -61,10 +61,6 @@
 
 ---
 
-## 📲 [Download & Install the App](https://github.com/UsmanAnsari/StockWise/releases/download/1.0.0/app-debug.apk)
-
----
-
 ## 🛠️ Tech Stack
 
 | Category | Technologies |
@@ -80,6 +76,9 @@
 
 ---
 
+## 📲 [Download & Install the App](https://github.com/UsmanAnsari/StockWise/releases/download/1.0.0/app-debug.apk)
+
+---
 ## 🏗️ Architecture
 
 StockWise is built with **Clean Architecture** and **MVI (Model-View-Intent)** pattern, ensuring maintainability, testability, and scalability.
