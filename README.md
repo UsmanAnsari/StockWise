@@ -53,6 +53,15 @@
 </div>
 
 ---
+## 🎬 Demo
+
+<div align="center">
+  <img src="gif/StockWise.gif" alt="StockWise Demo Gif" width="300"/>
+</div>
+
+[StockWise DEMO - YouTube](https://youtu.be/hc8KFlWHrpQ)
+
+---
 ## 🛠️ Tech Stack
 
 | Category | Technologies |
