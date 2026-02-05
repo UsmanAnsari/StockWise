@@ -53,13 +53,11 @@
 </div>
 
 ---
-## 🎬 Demo
+## 🎬 [StockWise DEMO - YouTube](https://youtu.be/hc8KFlWHrpQ)
 
-<div align="center">
-  <img src="gif/StockWise.gif" alt="StockWise Demo Gif" width="300"/>
-</div>
-
-[StockWise DEMO - YouTube](https://youtu.be/hc8KFlWHrpQ)
+| Dashboard | Products | Stock Movements |
+|:-----------:|:-----------:|:-----------:|
+| ![Dashboard](gif/Dashboard.gif) | ![Products](gif/Product.gif) | ![Stock Movements](gif/StockMovement.gif) |
 
 ---
 ## 🛠️ Tech Stack
