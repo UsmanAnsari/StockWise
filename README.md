@@ -279,8 +279,8 @@ app/src/main/java/com/yourpackage/stockwise/
 StockWise includes comprehensive test coverage:
 
 ### Test Statistics
-- **~95 tests** across unit and instrumented tests
-- **60-75% coverage** of critical business logic
+- **~70 unit tests** across viewmodels, repositories, DAOs and usecases
+- **70-80% coverage** of critical business logic
 
 ### Test Categories
 
